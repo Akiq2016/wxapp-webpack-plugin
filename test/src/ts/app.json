@@ -18,7 +18,7 @@
   },
   "subPackages": [
     {
-      "root": "pages/product",
+      "root": "subPackages/product",
       "pages": [
         "productDetail",
         "productList"
