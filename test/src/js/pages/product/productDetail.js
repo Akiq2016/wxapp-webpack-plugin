@@ -1,8 +1,6 @@
 
 import { formatTime } from '../../utils/util';
 import Product from './product.service';
-
-console.log(Product, '!!!!!!!')
 const productService = new Product();
 
 Page({

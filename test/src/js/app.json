@@ -27,8 +27,8 @@
     {
       "root": "pages/product2",
       "pages": [
-        "productDetail2",
-        "productList2"
+        "productDetail",
+        "productList"
       ]
     }
   ],

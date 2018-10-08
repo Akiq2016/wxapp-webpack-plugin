@@ -8,7 +8,6 @@ import MultiEntryPlugin from 'webpack/lib/MultiEntryPlugin';
 import SingleEntryPlugin from 'webpack/lib/SingleEntryPlugin';
 import FunctionModulePlugin from 'webpack/lib/FunctionModulePlugin';
 import NodeSourcePlugin from 'webpack/lib/node/NodeSourcePlugin';
-import { readdir } from 'fs';
 
 const { CommonsChunkPlugin } = optimize;
 
@@ -429,15 +428,21 @@ export default class WXAppPlugin {
 		const { target } = compilation.options;
 		const commonChunkName = stripExt(commonModuleName);
 		const globalVar = target.name === 'Alipay' ? 'my' : 'wx';
+		const subEntryResources = [].concat(...this.subEntryResources.map(v => v))
+		const scripts = [].concat(this.entryResources).concat(subEntryResources);
+		const subDirs = this.subEntryResources.filter(v => v.length).map(v => v[0].slice(0, v[0].lastIndexOf('/') + 1));
 
 		// inject chunk entries
 		compilation.chunkTemplate.plugin('render', (core, { name }) => {
 
-			console.log('fileName ->', name);
+			if (scripts.indexOf(name) >= 0 || subDirs.find(v => name.indexOf(v) >= 0)) {
+				let relativePath;
+				if (subEntryResources.indexOf(name) >= 0) {
+					relativePath = `${commonModuleName}`
+				} else {
+					relativePath = relative(dirname(name), `./${commonModuleName}`);
+				}
 
-			if (this.entryResources.indexOf(name) >= 0) {
-
-				const relativePath = relative(dirname(name), `./${commonModuleName}`);
 				const posixPath = relativePath.replace(/\\/g, '/');
 				const source = core.source();
 
