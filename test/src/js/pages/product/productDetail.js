@@ -8,7 +8,6 @@ const productService = new Product();
 Page({
 	data: {
 		logs: [],
-		testImage: require('./images/test.png')
 	},
 	onLoad() {
 		this.setData({

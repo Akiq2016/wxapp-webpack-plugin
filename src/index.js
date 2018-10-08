@@ -257,7 +257,7 @@ export default class WXAppPlugin {
 			}
 
 			subEntryResources.push([...subPages.map(subPage => join(root, subPage))]);
-			}
+		}
 
 		entryResources = ['app', ...pages, ...components]
 
@@ -308,7 +308,6 @@ export default class WXAppPlugin {
 		compiler.apply(new MultiEntryPlugin(this.base, entries, chunkName));
 	}
 
-	// todo sub packages assets should be splited from main package
 	async compileAssets(compiler) {
 		const {
 			options: { include, exclude, dot, assetsChunkName, extensions },
